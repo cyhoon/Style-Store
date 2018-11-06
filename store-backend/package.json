@@ -1,0 +1,26 @@
+{
+  "name": "store-backend",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon -e ts,tsx --exec ts-node ./src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "joi": "^14.0.4",
+    "kcors": "^2.2.2",
+    "koa": "^2.6.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "mysql": "^2.16.0",
+    "typeorm": "^0.2.8"
+  },
+  "devDependencies": {
+    "@types/joi": "^14.0.0",
+    "@types/kcors": "^2.2.3",
+    "@types/koa": "^2.0.46",
+    "@types/koa-bodyparser": "^5.0.1",
+    "@types/koa-router": "^7.0.32"
+  }
+}
