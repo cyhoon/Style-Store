@@ -2,7 +2,7 @@ import * as Joi from "joi";
 
 const signInValidation = (schema) => {
   const signInSchema = {
-    userEmail: Joi.string().email(),
+    userEmail: Joi.string().email().required(),
     pw: Joi.string().required(),
   };
 
@@ -12,7 +12,7 @@ const signInValidation = (schema) => {
 
 const signUpValidation = (schema) => {
   const signUpSchema = {
-    userEmail: Joi.string().email(),
+    userEmail: Joi.string().email().required(),
     pw: Joi.string().required(),
     nickName: Joi.string().required(),
   };

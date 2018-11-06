@@ -1,4 +1,4 @@
-import {Entity, PrimaryColumn, Column, OneToOne, JoinColumn, OneToMany} from "typeorm";
+import {Entity, PrimaryColumn, Column, OneToOne, JoinColumn, OneToMany, CreateDateColumn} from "typeorm";
 import Cart from "./Cart";
 
 @Entity()
@@ -12,13 +12,13 @@ class User {
   @Column({ name: "nick_name", length: 50 })
   nickName: string; // 이름
 
-  @Column({ name: "gender", length: 30 })
+  @Column({ name: "gender", length: 30, nullable: true })
   gender: string; // 성별
 
-  @Column({ name: "birth_day", type: "date" })
+  @CreateDateColumn({ name: "birth_day" })
   birthDay: Date; // 생일
 
-  @Column({ name: "photo_src", length: 150 })
+  @Column({ name: "photo_src", length: 150, nullable: true, default: "/img/basic_profile.png" })
   photoSrc: string; // 프로필 이미지
 
   @OneToMany(type => Cart, cart => cart.user)
