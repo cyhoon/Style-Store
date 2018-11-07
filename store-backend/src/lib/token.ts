@@ -14,13 +14,14 @@ export const generateToken = async (payload: PayloadType) => {
     return await jwt.sign(payload, secret, {
       issuer: 'stylestore.io',
       expiresIn: '7d',
+      subject: 'authToken',
     });
   } catch (error) {
     throw error;
   }
 };
 
-export const decodeToken = async (token) => {
+export const verifyToken = async (token: string) => {
   console.log('decode token');
 
   try {
