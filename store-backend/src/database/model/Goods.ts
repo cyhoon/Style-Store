@@ -1,11 +1,11 @@
-import {Entity, PrimaryColumn, Column, OneToOne, JoinColumn, OneToMany} from "typeorm";
+import {Entity, Column, OneToOne, JoinColumn, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import Options from "./Options";
 import Shipping from "./Shipping";
 import Cart from "./Cart";
 
 @Entity()
 class Goods {
-  @PrimaryColumn({ name: "id" })
+  @PrimaryGeneratedColumn({ name: "id" })
   id: number; // 상품 id
 
   @Column({ name: "name", length: 100 })

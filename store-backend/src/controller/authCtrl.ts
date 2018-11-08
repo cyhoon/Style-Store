@@ -1,6 +1,5 @@
 import { Context } from "koa";
 import { signInValidation, signUpValidation } from "../lib/validation/authValidation";
-import { connection } from "../database/connection";
 import User from "../database/model/User";
 import { getManager, Repository } from "typeorm";
 import { generateToken } from "../lib/token";

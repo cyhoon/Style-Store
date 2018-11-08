@@ -3,7 +3,7 @@ import Goods from "./Goods";
 
 @Entity()
 class Shipping {
-  @PrimaryGeneratedColumn({ name: "id" })
+  @PrimaryGeneratedColumn()
   id: number; // 배송비 아이디
 
   @Column({ name: "method", length: 30 })

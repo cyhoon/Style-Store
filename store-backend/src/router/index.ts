@@ -10,7 +10,7 @@ const rootRouter: Router = new Router();
 rootRouter.use('/auth', authRouter.routes());
 
 /** 상품 조회 및 등록 */
-rootRouter.get('/goods', checkToken, goodsRouter.routes());
+rootRouter.use('/goods', checkToken, goodsRouter.routes());
 
 rootRouter.get('/test', (ctx: Context): void => {
   ctx.status = 200;
