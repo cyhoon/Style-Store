@@ -91,8 +91,41 @@ const saveCart = async (ctx: AuthContext) => {
 };
 
 const removeCart = async (ctx: AuthContext) => {
-  ctx.status = 200;
-  ctx.body = 'removeCart';
+  try {
+    const { userEmail } = ctx.token;
+    const { cartId } = ctx.params;
+
+    const userRepository:Repository<User> = getManager().getRepository(User);
+    const cartRepository:Repository<Cart> = getManager().getRepository(Cart);
+
+    const user = await userRepository.findOne({ where: { userEmail }});
+
+    const isExists = await cartRepository.findOne({ where: { id: cartId, user }});
+
+    if (!isExists) {
+      ctx.status = 406;
+      ctx.body = {
+        name: 'NOT_EXISTS',
+        description: '삭제할 장바구니 데이터가 존재하지 않습니다.',
+      };
+      return;
+    }
+
+    await cartRepository.delete({ id: cartId, user });
+
+    ctx.status = 200;
+    ctx.body = {
+      name: 'SUCCESS',
+      description: '장바구니 데이터를 삭제했습니다.',
+    };
+  } catch (error) {
+    console.error(`SERVER ERROR: ${error.message}`);
+    ctx.status = 500;
+    ctx.body = {
+      name: 'SERVER_ERROR',
+      description: '서버 에러'
+    }
+  }
 };
 
 const getCartCount = async (ctx: AuthContext) => {
