@@ -35,6 +35,43 @@ const getGoods = async (ctx: AuthContext) => {
   }
 };
 
+const getDetailGoods = async (ctx: AuthContext) => {
+  try {
+    const { goodsId } = ctx.params;
+
+    const goodsRepository:Repository<Goods> = getManager().getRepository(Goods);
+    const goods = await goodsRepository.findOne({
+      relations: ["options", "shipping"],
+      where: { id: goodsId }
+    });
+
+    if (!goods) {
+      ctx.status = 404;
+      ctx.body = {
+        name: 'NOT_FOUND_GOODS',
+        description: '상품을 찾을 수 없습니다',
+      };
+      return;
+    }
+
+    ctx.status = 200;
+    ctx.body = {
+      name: 'SUCCESS',
+      description: '상품 상세보기 완료',
+      data: {
+        goods,
+      },
+    };
+  } catch (error) {
+    console.error(`SERVER ERROR: ${error.message}`);
+    ctx.status = 500;
+    ctx.body = {
+      name: 'SERVER_ERROR',
+      description: '서버 에러'
+    };
+  }
+};
+
 const saveGoods = async (ctx: AuthContext) => {
   try {
     // 1. valid check
@@ -123,5 +160,6 @@ const saveGoods = async (ctx: AuthContext) => {
 
 export {
   getGoods,
+  getDetailGoods,
   saveGoods,
 }
