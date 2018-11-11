@@ -17,9 +17,32 @@ interface AuthContext extends Context {
   }
 };
 
-const getCarts = (ctx: Context) => {
-  ctx.status = 200;
-  ctx.body = 'getCarts';
+const getCarts = async (ctx: AuthContext) => {
+  try {
+    const { userEmail } = ctx.token;
+    const cartRepository:Repository<Cart> = getManager().getRepository(Cart);
+
+    const cartList = await cartRepository.find({
+      relations: ["goods", "options"],
+      where: { user: userEmail }
+    });
+
+    ctx.status = 200;
+    ctx.body = {
+      name: 'SUCCESS',
+      description: '장바구니 목록 조회 성공',
+      data: {
+        cartList,
+      },
+    };
+  } catch (error) {
+    console.error(`error message: ${error.message}`);
+    ctx.status = 500;
+    ctx.body = {
+      name: 'SERVER_ERROR',
+      description: '서버 에러'
+    };
+  }
 };
 
 const saveCart = async (ctx: AuthContext) => {
