@@ -1,0 +1,21 @@
+/* body, 타이포그래피 등의 기본 스타일 설정 */
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Nanum Gothic', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// box-sizing 일괄 설정
+* {
+  box-sizing: inherit;
+}
+
+// 링크 스타일 밑줄 및 색상 무효화
+a {
+  text-decoration: inherit;
+  color: inherit;
+}
