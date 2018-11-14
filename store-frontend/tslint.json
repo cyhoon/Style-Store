@@ -6,5 +6,10 @@
       "node_modules/**/*.ts",
       "coverage/lcov-report/*.js"
     ]
+  },
+  "rules": {
+    "interface-name": [true, "never-prefix"], // <-- Include this line
+    "no-console": false,
+    "object-literal-sort-keys": false
   }
 }

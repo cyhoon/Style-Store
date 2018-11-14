@@ -11,7 +11,7 @@ body {
 
 // box-sizing 일괄 설정
 * {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 // 링크 스타일 밑줄 및 색상 무효화

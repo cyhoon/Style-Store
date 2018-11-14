@@ -1,3 +1,51 @@
-.hello {
-  font-size: 32px;
+.login-wrap {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url('https://staticassets-a.styleshare.kr/f610613685/img/auth/bg_img_1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  .bg-wrap {
+    position: absolute;
+    width: 100%;
+    height: inherit;
+    background-image: url('https://staticassets-a.styleshare.kr/f610613685/img/auth/pattern.png');
+  }
+
+  .login-form {
+    // width: 450px;
+    padding: 30px;
+    border-radius: 10px;
+    z-index: 1;
+    background: white;
+
+    .form-bg-wrap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      opacity: 0.9;
+    }
+
+    .title {
+      display: block;
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .go-signup {
+      font-size: 14px;
+      margin-top: 20px;
+      text-align: right;
+      color: #9EA4AA;
+    }
+  }
 }
