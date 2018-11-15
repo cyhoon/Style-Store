@@ -6,6 +6,7 @@ const {
 import * as Koa from "koa";
 import * as Router from "koa-router";
 import * as bodyParser from "koa-bodyparser";
+import * as cors from 'kcors';
 import { dbConnect } from "./database/connection";
 import rootRouter from "./router";
 
@@ -23,6 +24,7 @@ class Server {
     // Add all application routes
     this.router.use('/api', rootRouter.routes());
 
+    this.app.use(cors());
     this.app.use(bodyParser());
     this.app.use(this.router.routes());
     this.app.use(this.router.allowedMethods());
