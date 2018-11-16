@@ -4,7 +4,10 @@
   "main": "./src/index.ts",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon -e ts,tsx --exec ts-node ./src/index.ts"
+    "dev": "nodemon -e ts,tsx --exec ts-node ./src/index.ts",
+    "build": "tsc",
+    "start": "pm2 start --name ss-backend ./dist/index.js",
+    "prod": "yarn run build && yarn run start"
   },
   "dependencies": {
     "dotenv": "^6.1.0",

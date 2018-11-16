@@ -19,7 +19,7 @@ const dbConnect = async () => {
       password: DATABASE_PASSWORD,
       database: DATABASE_NAME,
       entities: [
-        __dirname + "/model/*.ts",
+        __dirname + '/model/*{.ts,.js}',
       ],
       synchronize: true,
       logging: false
