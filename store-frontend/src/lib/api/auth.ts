@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const baseUrl = 'localhost:8080';
+const baseUrl = 'http://127.0.0.1:8080';
 
 interface LoginBodyParam {
-  email: string;
-  password: string;
+  userEmail: string;
+  pw: string;
 };
 
 interface RegisterBodyParam {
-  email: string;
-  password: string;
+  userEmail: string;
+  pw: string;
   nickName: string;
 }
 

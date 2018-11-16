@@ -4,14 +4,12 @@ import { requestLogin } from "src/lib/api/auth";
 import { LOGIN, loginFail, loginSuccess } from "src/store/modules/auth";
 
 interface LoginBodyData {
-  email: string;
-  password: string;
+  userEmail: string;
+  pw: string;
 };
 
-export function* login(param: any): SagaIterator {
-  const { email, password } = param.data;
-
-  const bodyData: LoginBodyData = { email, password };
+export function* login({ payload: { userEmail, pw } }: any): SagaIterator {
+  const bodyData: LoginBodyData = { userEmail, pw };
 
   const response = yield call(requestLogin, bodyData);
 
