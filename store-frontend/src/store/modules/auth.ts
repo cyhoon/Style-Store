@@ -18,35 +18,106 @@ export const loginRequest: any = createAction(LOGIN, (userEmail: string, pw: str
 export const loginSuccess = createAction(LOGIN_SUCCESS, (token: string) => token);
 export const loginFail = createAction(LOGIN_FAIL, (message: string) => message);
 
-// initial state
-const initialState = {
+interface AuthState {
+  pending: boolean;
+  response: {
+    status: string;
+    description: string;
+    user: {
+      userEmail: string;
+      nickName: string;
+      gender: string;
+      birthDay: string;
+      photoSrc: string;
+    },
+    token: string;
+  },
+};
+
+interface AuthLoginSuccessAction {
+  payload: {
+    description: string;
+    data: {
+      user: {
+        userEmail: string;
+        nickName: string;
+        gender: string;
+        birthDay: string;
+        photoSrc: string;
+      };
+      token: string;
+    };
+  };
+};
+
+interface AuthLoginFailAction {
+  payload: {
+    description: string;
+  };
+};
+
+const initialState: AuthState = {
   pending: false,
-  token: '',
   response: {
     status: '',
-    message: ''
+    description: '',
+    user: {
+      userEmail: '',
+      nickName: '',
+      gender: '',
+      birthDay: '',
+      photoSrc: '',
+    },
+    token: '',
   },
 };
 
 // reducer
 export default handleActions({
-  [LOGIN]: (state: any, action) => {
+  [LOGIN]: (state: AuthState, action: any) => {
     return produce(state, (draft) => {
       draft.pending = true;
+      draft.response = {
+        status: '',
+        description: '',
+        user: {
+          userEmail: '',
+          nickName: '',
+          gender: '',
+          birthDay: '',
+          photoSrc: '',
+        },
+        token: '',
+      }
     });
   },
-  [LOGIN_SUCCESS]: (state: any, action: any) => {
-    console.log('action token: ', action);
-    return produce(state, (draft) => {
+  [LOGIN_SUCCESS]: (state: AuthState, action: AuthLoginSuccessAction) => {
+    const { description, data: { user, token } } = action.payload;
+
+    return produce(state, (draft: AuthState) => {
       draft.pending = false;
-      draft.token = action.token;
+      draft.response = {
+        status: 'success',
+        description,
+        user: {
+          userEmail: user.userEmail,
+          nickName: user.nickName,
+          gender: user.gender,
+          birthDay: user.birthDay,
+          photoSrc: user.photoSrc
+        },
+        token
+      };
     });
   },
-  [LOGIN_FAIL]: (state: any, action) => {
-    return produce(state, (draft) => {
+  [LOGIN_FAIL]: (state: AuthState, action: AuthLoginFailAction) => {
+    const { description } = action.payload;
+
+    return produce(state, (draft: any) => {
       draft.pending = false;
       draft.response = {
         status: 'fail',
+        description
       }
     });
   },
