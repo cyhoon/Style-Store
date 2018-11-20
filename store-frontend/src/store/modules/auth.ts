@@ -22,7 +22,7 @@ export const loginRequest: any = createAction(LOGIN, (userEmail: string, pw: str
 export const loginSuccess = createAction(LOGIN_SUCCESS);
 export const loginFail = createAction(LOGIN_FAIL);
 
-export const registerRequest: any = createAction(LOGIN, (userEmail: string, pw: string, nickName: string) => {
+export const registerRequest: any = createAction(REGISTER, (userEmail: string, pw: string, nickName: string) => {
   return {
     userEmail,
     pw,
