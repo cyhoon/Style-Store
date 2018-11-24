@@ -111,7 +111,6 @@ const initialState: AuthState = {
 // reducer
 export default handleActions({
   [LOGIN]: (state: AuthState, action: any) => {
-    console.log('여기 실행함');
     return produce(state, (draft) => {
       draft.pending = true;
       draft.response = {

@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import Loading from 'src/components/common/loading';
 import LoginForm from 'src/components/login/form';
 import { loginRequest } from 'src/store/modules/auth';
+import { saveUser } from 'src/store/modules/user';
 import Storage from '../lib/storage';
 
 interface Props extends RouteComponentProps<any> {
@@ -23,6 +24,7 @@ interface Props extends RouteComponentProps<any> {
     token: string;
   },
   loginRequest: typeof loginRequest;
+  saveUser: typeof saveUser;
 };
 
 interface State {
@@ -54,6 +56,7 @@ class LoginContainer extends React.Component<Props, State> {
       Storage.set('token', token);
       Storage.set('user', user);
 
+      this.props.saveUser({ token, user });
       this.props.history.push('/');
     }
   }
@@ -97,6 +100,7 @@ const mapStateToProps = ({ auth }: any) => {
 
 const mapDispatchToProps = {
   loginRequest,
+  saveUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginContainer));

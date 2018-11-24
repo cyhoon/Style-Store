@@ -6,6 +6,7 @@ import Loading from 'src/components/common/loading';
 import RegisterForm from 'src/components/register/form';
 import Storage from 'src/lib/storage';
 import { registerRequest } from 'src/store/modules/auth';
+import { saveUser } from 'src/store/modules/user';
 
 
 interface Props extends RouteComponentProps<any> {
@@ -25,6 +26,7 @@ interface Props extends RouteComponentProps<any> {
     token: string;
   },
   registerRequest: typeof registerRequest;
+  saveUser: typeof saveUser;
 };
 
 interface State {
@@ -60,6 +62,8 @@ class RegisterContainer extends React.Component<Props, State> {
       // 토큰과 user 정보도 로컬 저장소에 저장한다.
       Storage.set('token', token);
       Storage.set('user', user);
+
+      this.props.saveUser({ token, user });
 
       this.props.history.push('/');
     }
@@ -111,7 +115,8 @@ const mapStateToProps = ({ auth }: any) => {
 }
 
 const mapDispatchToProps = {
-  registerRequest
+  registerRequest,
+  saveUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RegisterContainer));
