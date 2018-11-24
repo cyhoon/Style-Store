@@ -23,7 +23,11 @@ const getGoods = async (ctx: AuthContext) => {
 
     ctx.status = 200;
     ctx.body = {
-      goods,
+      name: 'SUCCESS',
+      description: '상품 목록 조회 성공',
+      data: {
+        goods,
+      },
     };
   } catch (error) {
     console.error(`SERVER ERROR: ${error.message}`);
