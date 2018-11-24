@@ -58,15 +58,23 @@
 
     .cart-add-btn {
       border-color: #4adaaf;
+      background-color: #4adaaf;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 15px;
+      line-height: 15px;
       color: #4adaaf;
       border-radius: 3px;
-      overflow: hidden;
       width: 100%;
-      background-color: white;
-      height: 25px;
       outline: none;
       font-weight: 800;
       cursor: pointer;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .cart-add-btn:hover {
+      background-color: #24b18c;
     }
   }
 }

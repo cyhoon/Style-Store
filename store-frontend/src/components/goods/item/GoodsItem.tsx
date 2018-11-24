@@ -52,10 +52,11 @@ class GoodsItem extends React.Component<Props, State> {
           <span className={cx('price')}>{price}원</span>
           <div className={cx('size')}>
             <select>
+              <option value="" disabled={true} selected={true}>사이즈를 선택해 주세요</option>
               {
                 options.map(option => {
                   return (
-                    <option key={option.id}>{option.size}</option>
+                    <option key={option.id} value={option.size}>{option.size}</option>
                   )
                 })
               }
