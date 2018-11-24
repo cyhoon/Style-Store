@@ -35,11 +35,9 @@ class GoodsContainer extends React.Component<Props, {}> {
     this.props.getGoods();
   };
 
-  public render() {
+  public render = () => {
     return (
-      <div>
-        <GoodsList goods={this.props.goods} />
-      </div>
+      <GoodsList goods={this.props.goods} />
     );
   }
 };
