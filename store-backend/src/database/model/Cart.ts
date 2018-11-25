@@ -2,6 +2,7 @@ import {Entity, Column, OneToOne, JoinColumn, OneToMany, PrimaryGeneratedColumn,
 import User from "./User";
 import Goods from "./Goods";
 import Options from "./Options";
+import Shipping from "./Shipping";
 
 @Entity()
 class Cart {
@@ -18,6 +19,10 @@ class Cart {
   @ManyToOne(type => Options, options => options.id)
   @JoinColumn({ name: "options_id" })
   options: Options; // 옵션
+
+  @ManyToOne(type => Shipping, shipping => shipping.id)
+  @JoinColumn({ name: "shipping_id" })
+  shipping: Shipping;
 
   @ManyToOne(type => User, user => user.userEmail)
   @JoinColumn({ name: "user_email" })

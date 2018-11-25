@@ -5,6 +5,7 @@ import Goods from "../database/model/Goods";
 import Options from "../database/model/Options";
 import Cart from "../database/model/Cart";
 import User from "../database/model/User";
+import Shipping from "../database/model/Shipping";
 
 interface AuthContext extends Context {
   token?: {
@@ -23,7 +24,7 @@ const getCarts = async (ctx: AuthContext) => {
     const cartRepository:Repository<Cart> = getManager().getRepository(Cart);
 
     const cartList = await cartRepository.find({
-      relations: ["goods", "options"],
+      relations: ["goods", "options", "shipping"],
       where: { user: userEmail }
     });
 
@@ -71,10 +72,12 @@ const saveCart = async (ctx: AuthContext) => {
     const cartRepository:Repository<Cart> = getManager().getRepository(Cart);
     const goodsRepository:Repository<Goods> = getManager().getRepository(Goods);
     const optionsRepository:Repository<Options> = getManager().getRepository(Options);
+    const shippingRepository:Repository<Shipping> = getManager().getRepository(Shipping);
 
     const user = await userRepository.findOne({ where: { userEmail }});
     const goods = await goodsRepository.findOne({ where: { id: goodsId }});
     const options = await optionsRepository.findOne({ where: { id: optionsId }});
+    const shipping = await shippingRepository.findOne({ where: { goodsId: goods.id }});
 
     if (!goods || !options) {
       ctx.status = 406;
@@ -90,6 +93,7 @@ const saveCart = async (ctx: AuthContext) => {
     cartBuild.goods = goods;
     cartBuild.options = options;
     cartBuild.user = user;
+    cartBuild.shipping = shipping;
 
     await cartRepository.save(cartBuild);
 

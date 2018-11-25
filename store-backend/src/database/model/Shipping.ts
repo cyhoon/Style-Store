@@ -1,5 +1,6 @@
 import {Entity, Column, OneToOne, JoinColumn, OneToMany, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
 import Goods from "./Goods";
+import Cart from "./Cart";
 
 @Entity()
 class Shipping {
@@ -20,6 +21,9 @@ class Shipping {
   })
   @JoinColumn({ name: "goods_id" })
   goodsId: Goods; // 외래키 설정
+
+  @OneToMany(type => Cart, cart => cart.shipping)
+  cart: Cart[];
 }
 
 export default Shipping;
