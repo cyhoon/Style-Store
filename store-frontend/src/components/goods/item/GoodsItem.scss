@@ -43,7 +43,7 @@
     }
 
     .size {
-      margin-bottom: 15px;
+      margin-bottom: 5px;
 
       select {
         border-color: #4adaaf;
@@ -54,6 +54,23 @@
         background-color: white;
         height: 25px;
         outline: none;
+      }
+    }
+
+    .quantity {
+      margin-bottom: 15px;
+
+      input[type="number"] {
+        border-color: #4adaaf;
+        border-radius: 3px;
+        overflow: hidden;
+        cursor: pointer;
+        width: 100%;
+        background-color: white;
+        height: 25px;
+        outline: none;
+        border: 1px solid #4adaaf;
+        padding-left: 9px;
       }
     }
 

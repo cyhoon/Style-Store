@@ -41,8 +41,8 @@ class GoodsContainer extends React.Component<Props, {}> {
     this.props.getGoods();
   };
 
-  public handleCartAddRequest = (goodsId: number, optionsId: number) => {
-    this.props.cartAddRequest({ goodsId, optionsId });
+  public handleCartAddRequest = (goodsId: number, optionsId: number, quantity: number) => {
+    this.props.cartAddRequest({ goodsId, optionsId, quantity });
   }
 
   public render = () => {

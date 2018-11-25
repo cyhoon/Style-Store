@@ -29,6 +29,10 @@
     padding: 3px 0;
     cursor: pointer;
   }
+
+  .notice-button:hover {
+    background-color: #da5984;
+  }
 }
 
 .notice-wrap:before {

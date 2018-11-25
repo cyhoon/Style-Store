@@ -28,8 +28,8 @@ interface CartAddBodyData {
   quantity: number;
 }
 
-export function* cartAdd({ payload: { goodsId, optionsId } }: any): SagaIterator {
-  const requestBodyData: CartAddBodyData = { goodsId, optionsId, quantity: 1 };
+export function* cartAdd({ payload: { goodsId, optionsId, quantity } }: any): SagaIterator {
+  const requestBodyData: CartAddBodyData = { goodsId, optionsId, quantity };
   const token = Storage.get('token');
 
   const response = yield call(requestCartAdd, token, requestBodyData);

@@ -31,11 +31,12 @@ interface Props {
     goodsId: number;
     status: string;
   };
-  handleCartAddRequest(goodsId: number, optionsId: number): void;
+  handleCartAddRequest(goodsId: number, optionsId: number, quantity: number): void;
 }
 
 interface State {
   optionsId: number;
+  quantity: number;
   visibleNotice: boolean;
 }
 
@@ -43,12 +44,24 @@ class GoodsItem extends React.Component<Props, State> {
   public timerId: any = '';
   public state:State = {
     optionsId: 0,
+    quantity: 1,
     visibleNotice: true,
   }
 
-  public handleChangeSelect = (event: React.FormEvent<HTMLSelectElement>) => {
+  public handleChangeSelect = (event: React.FormEvent<HTMLSelectElement>): void => {
     const optionsId = parseInt(event.currentTarget.value, 10);
     this.setState({ optionsId });
+  }
+
+  public handleChangeQuantity = (event: React.FormEvent<HTMLInputElement>): void => {
+    const currentValue = event.currentTarget.valueAsNumber;
+    let quantity = this.state.quantity;
+
+    if (currentValue > 0) {
+      quantity = parseInt(event.currentTarget.value, 10);
+    }
+
+    this.setState({ quantity });
   }
 
   public handleAddBtn = () => {
@@ -62,8 +75,13 @@ class GoodsItem extends React.Component<Props, State> {
       return;
     }
 
+    if (this.state.quantity <= 0) {
+      alert('수량은 한개 이상이어야 합니다.');
+      return;
+    }
+
     this.setState({ visibleNotice: true });
-    this.props.handleCartAddRequest(this.props.id, this.state.optionsId);
+    this.props.handleCartAddRequest(this.props.id, this.state.optionsId, this.state.quantity);
   }
 
   public renderNotice = (): any => {
@@ -117,6 +135,9 @@ class GoodsItem extends React.Component<Props, State> {
                 })
               }
             </select>
+          </div>
+          <div className={cx('quantity')}>
+            <input type="number" step="1" value={this.state.quantity} placeholder="수량을 입력해 주세요" onChange={this.handleChangeQuantity} />
           </div>
           { this.renderNotice() }
           <button className={cx('cart-add-btn')} onClick={this.handleAddBtn}>장바구니 추가</button>

@@ -33,7 +33,7 @@ interface Props {
     goodsId: number;
     status: string;
   };
-  handleCartAddRequest(goodsId: number, optionsId: number): void;
+  handleCartAddRequest(goodsId: number, optionsId: number, quantity: number): void;
 }
 
 class GoodsList extends React.Component<Props, {}> {
