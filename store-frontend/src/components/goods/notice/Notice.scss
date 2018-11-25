@@ -1,0 +1,51 @@
+.notice-wrap {
+  position: absolute;
+  bottom: 53px;
+  width: 242px;
+  background-color: white;
+  border: 1px solid #E8EBED;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  left: 15px;
+  box-shadow: 0px 5px 25px #E8EBED;
+
+  .description {
+    display: block;
+    font-size: 13px;
+    margin: 10px 0;
+  }
+
+  .notice-button {
+    width: 150px;
+    font-size: 12px;
+    background-color: #f69;
+    color: white;
+    font-weight: 800;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 3px 0;
+    cursor: pointer;
+  }
+}
+
+.notice-wrap:before {
+  border-color: #E8EBED transparent;
+  border-width: 10px 10px 0 10px;
+}
+
+.notice-wrap:after {
+  border-color: white transparent;
+  border-width: 9px 9px 0 9px;
+  margin-right: 1px;
+  margin-bottom: 1px;
+}
+
+.notice-wrap:before, .notice-wrap:after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 55px;
+  border-style: solid;
+}
