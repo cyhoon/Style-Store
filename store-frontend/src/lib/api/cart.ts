@@ -10,3 +10,18 @@ export const requestCartCount = async (token: string) => {
     return response;
   }
 };
+
+interface CartAddRequestBody {
+  goodsId: number;
+  optionsId: number;
+  quantity: number;
+}
+
+export const requestCartAdd = async (token: string, requestBody: CartAddRequestBody) => {
+  try {
+    const response = await axios.post(baseUrl + '/api/carts', requestBody, { headers: { 'stylestore-token': token } });
+    return response;
+  } catch ({ response }) {
+    return response;
+  }
+};

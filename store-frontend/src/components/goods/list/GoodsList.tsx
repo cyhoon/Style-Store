@@ -29,6 +29,11 @@ interface GoodsItemProps {
 
 interface Props {
   goods: GoodsItemProps[];
+  addCart: {
+    goodsId: number;
+    status: string;
+  };
+  handleCartAddRequest(goodsId: number, optionsId: number): void;
 }
 
 class GoodsList extends React.Component<Props, {}> {
@@ -59,6 +64,8 @@ class GoodsList extends React.Component<Props, {}> {
                 price={price}
                 options={options}
                 shipping={shipping}
+                handleCartAddRequest={this.props.handleCartAddRequest}
+                addCart={this.props.addCart}
               />
             );
           })}
