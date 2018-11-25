@@ -100,7 +100,7 @@ const saveCart = async (ctx: AuthContext) => {
       name: 'SUCCESS',
       description: '장바구니 추가 완료',
       data: {
-        cartCount,
+        count: cartCount,
       }
     };
   } catch (error) {
