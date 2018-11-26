@@ -1,7 +1,9 @@
 import * as classNames from 'classnames/bind';
 import * as React from 'react';
 
+import CartContainer from 'src/container/CartContainer';
 import HeaderContainer from 'src/container/HeaderContainer';
+import CartHeader from '../header';
 
 import * as styles from './CartTemplate.scss';
 
@@ -12,7 +14,8 @@ const CartTemplate: React.SFC<{}> = () => {
     <div className={cx('cart-template')}>
       <HeaderContainer />
       <div className={cx('main-wrap')}>
-        Main wrap
+        <CartHeader />
+        <CartContainer />
       </div>
     </div>
   );
