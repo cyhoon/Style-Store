@@ -27,7 +27,7 @@ const Header: React.SFC<Props> = ({
       return (
         <React.Fragment>
           <nav className="cart-wrap">
-            <Link to='/cart'>
+            <Link to='/me/cart'>
               <TiShoppingCart size="100%" className="shopping-cart" />
               { cartCount !== 0 ? <span className="cart-count">{cartCount}</span> : null }
             </Link>
