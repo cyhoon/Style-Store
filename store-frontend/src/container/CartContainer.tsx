@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+import CartList from 'src/components/cart/list';
+
 class CartContainer extends React.Component<{}, {}> {
   public render = () => {
     return (
-      <div />
+      <div>
+        <CartList />
+      </div>
     );
   };
 };
