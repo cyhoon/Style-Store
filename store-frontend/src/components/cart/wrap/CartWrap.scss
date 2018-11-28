@@ -1,0 +1,12 @@
+.cart-wrap {
+  display: flex;
+
+  .cart-list-wrap {
+    flex-basis: 70%;
+  }
+
+  .cart-result-wrap {
+    flex-basis: 28%;
+    margin-left: 2%;
+  }
+}

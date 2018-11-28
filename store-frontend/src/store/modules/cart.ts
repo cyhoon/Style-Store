@@ -1,13 +1,40 @@
 import { produce } from 'immer';
 import { createAction, handleActions } from "redux-actions";
 
+interface CartObject {
+  id: number;
+  quantity: number;
+  goods: {
+    id: number;
+    name: string;
+    provider: string;
+    price: number;
+  },
+  options: {
+    id: number;
+    color: string;
+    size: string;
+    stock: number;
+  },
+  shipping: {
+    id: number;
+    method: string;
+    price: number;
+    canBundle: boolean;
+  }
+}
+
 // type definition
 interface CartState {
   cartCount: number;
   addCart: {
     goodsId: number;
     status: string;
-  }
+  },
+  cartList: {
+    status: string;
+    data: CartObject[];
+  };
 };
 
 interface CartSuccessAction {
@@ -36,6 +63,10 @@ export const ADD_CART: string = 'cart/ADD_CART';
 export const ADD_CART_SUCCESS: string = 'cart/ADD_CART_SUCCESS';
 export const ADD_CART_FAIL: string = 'cart/ADD_CART_FAIL';
 
+export const GET_CART_LIST: string = 'cart/GET_CART_LIST';
+export const GET_CART_LIST_SUCCESS: string = 'cart/GET_CART_LIST_SUCCESS';
+export const GET_CART_LIST_FAIL: string = 'cart/GET_CART_LIST_FAIL';
+
 // action creator
 export const cartCountRequest: any = createAction(GET_CART_COUNT);
 export const cartCountSuccess = createAction(GET_CART_COUNT_SUCCESS);
@@ -45,12 +76,20 @@ export const cartAddRequest: any = createAction(ADD_CART);
 export const cartAddSuccess = createAction(ADD_CART_SUCCESS);
 export const cartAddFail = createAction(ADD_CART_FAIL);
 
+export const cartListRequest: any = createAction(GET_CART_LIST);
+export const cartListSuccess = createAction(GET_CART_LIST_SUCCESS);
+export const cartListFail = createAction(GET_CART_LIST_FAIL);
+
 const initialState: CartState = {
   cartCount: 0,
   addCart: {
     goodsId: 0, // 초기값
     status: 'INIT',
   },
+  cartList: {
+    status: 'INIT',
+    data: [],
+  }
 };
 
 // reducer
@@ -90,6 +129,25 @@ export default handleActions({
   [ADD_CART_FAIL]: (state: CartState, action: CartFailAction) => {
     return produce(state, (draft: CartState) => {
       draft.addCart.status = 'FAIL';
+    });
+  },
+  [GET_CART_LIST]: (state: CartState, action: any) => {
+    return produce(state, (draft: CartState) => {
+      draft.cartList.status = 'INIT';
+    });
+  },
+  [GET_CART_LIST_SUCCESS]: (state: CartState, action: any) => {
+    const { data: { cartList } } = action.payload;
+    return produce(state, (draft: CartState) => {
+      draft.cartList = {
+        status: 'SUCCESS',
+        data: cartList,
+      };
+    });
+  },
+  [GET_CART_LIST_FAIL]: (state: CartState, action: any) => {
+    return produce(state, (draft: CartState) => {
+      draft.cartList.status = 'FAIL';
     });
   }
 }, initialState);

@@ -1,8 +1,8 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
-import { requestCartAdd, requestCartCount } from "src/lib/api/cart";
+import { requestCartAdd, requestCartCount, requestCartList } from "src/lib/api/cart";
 import Storage from 'src/lib/storage';
-import { ADD_CART, cartAddFail, cartAddSuccess, cartCountFail, cartCountSuccess, GET_CART_COUNT } from "src/store/modules/cart";
+import { ADD_CART, cartAddFail, cartAddSuccess, cartCountFail, cartCountSuccess, cartListFail, cartListSuccess, GET_CART_COUNT, GET_CART_LIST } from "src/store/modules/cart";
 
 export function* cartCount(): SagaIterator {
   const token = Storage.get('token');
@@ -26,7 +26,7 @@ interface CartAddBodyData {
   goodsId: number;
   optionsId: number;
   quantity: number;
-}
+};
 
 export function* cartAdd({ payload: { goodsId, optionsId, quantity } }: any): SagaIterator {
   const requestBodyData: CartAddBodyData = { goodsId, optionsId, quantity };
@@ -49,8 +49,26 @@ export function* cartAdd({ payload: { goodsId, optionsId, quantity } }: any): Sa
       yield put(cartAddFail(responseBodyData));
       break;
     default:
-      console.log('알 수 없는 인증 에러');
+      console.log('알 수 없는 서버 에러');
       yield put(cartAddFail(responseBodyData));
+      break;
+  }
+};
+
+export function* cartList(): SagaIterator {
+  const token = Storage.get('token');
+
+  const response = yield call(requestCartList, token);
+
+  const { status, data: responseBodyData } = response;
+
+  switch (status) {
+    case 200:
+      yield put(cartListSuccess(responseBodyData));
+      break;
+    default:
+      console.log('알 수 없는 서버 에러');
+      yield put(cartListFail(responseBodyData));
       break;
   }
 }
@@ -62,3 +80,7 @@ export function* watchRequestCartCount() {
 export function* watchRequestCartAdd() {
   yield takeEvery(ADD_CART, cartAdd);
 };
+
+export function* watchRequestCartList() {
+  yield takeEvery(GET_CART_LIST, cartList);
+}
