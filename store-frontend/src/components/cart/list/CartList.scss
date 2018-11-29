@@ -1,0 +1,22 @@
+.cart-list {
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    .cart-head {
+      background-color: #E8EBED;
+      color: #454C53;
+      font-size: 12px;
+      font-weight: normal;
+      line-height: 30px;
+    }
+
+    .cart-body {
+      text-align: center;
+
+      td {
+        vertical-align: middle;
+      }
+    }
+  }
+}
