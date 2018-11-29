@@ -24,6 +24,8 @@ interface CartObject {
   }
 }
 
+type CartList = CartObject[];
+
 // type definition
 interface CartState {
   cartCount: number;
@@ -31,9 +33,9 @@ interface CartState {
     goodsId: number;
     status: string;
   },
-  cartList: {
+  providerList: {
     status: string;
-    data: CartObject[];
+    data: CartList[];
   };
 };
 
@@ -86,7 +88,7 @@ const initialState: CartState = {
     goodsId: 0, // 초기값
     status: 'INIT',
   },
-  cartList: {
+  providerList: {
     status: 'INIT',
     data: [],
   }
@@ -133,21 +135,21 @@ export default handleActions({
   },
   [GET_CART_LIST]: (state: CartState, action: any) => {
     return produce(state, (draft: CartState) => {
-      draft.cartList.status = 'INIT';
+      draft.providerList.status = 'INIT';
     });
   },
   [GET_CART_LIST_SUCCESS]: (state: CartState, action: any) => {
-    const { data: { cartList } } = action.payload;
+    const { data: { providerList } } = action.payload;
     return produce(state, (draft: CartState) => {
-      draft.cartList = {
+      draft.providerList = {
         status: 'SUCCESS',
-        data: cartList,
+        data: providerList,
       };
     });
   },
   [GET_CART_LIST_FAIL]: (state: CartState, action: any) => {
     return produce(state, (draft: CartState) => {
-      draft.cartList.status = 'FAIL';
+      draft.providerList.status = 'FAIL';
     });
   }
 }, initialState);

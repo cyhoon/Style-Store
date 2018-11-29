@@ -29,21 +29,18 @@ interface CartObject {
   }
 }
 
-interface CartList {
-  cartList: CartObject[];
-}
+type CartList = CartObject[];
 
 interface Props {
-  cartList: {
+  providerList: {
     status: string;
-    data: CartObject[];
+    data: CartList[];
   };
   cartListRequest: typeof cartListRequest;
 }
 
 interface State {
-  cartListWrap: CartList[];
-  cartList: CartObject[];
+  providerList: [];
   totalAmount: number;
   productAmount: number[];
   deliveryCharge: number[];
@@ -55,10 +52,10 @@ class CartContainer extends React.Component<Props, State> {
     // 여기서는 setState 를 하는 것이 아니라
     // 특정 props 가 바뀔 때 설정하고 설정하고 싶은 state 값을 리턴하는 형태로
     // 사용됩니다.
-    if (nextProps.cartList.data !== prevState.cartList) {
+    if (nextProps.providerList.data !== prevState.providerList) {
 
       return {
-        cartList: nextProps.cartList.data
+        providerList: nextProps.providerList.data
       };
     }
 
@@ -69,8 +66,7 @@ class CartContainer extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      cartListWrap: [],
-      cartList: [],
+      providerList: [],
       totalAmount: 0, // 총 결제금액
       productAmount: [], // 상품금액
       deliveryCharge: [] // 유료 배송
@@ -83,18 +79,12 @@ class CartContainer extends React.Component<Props, State> {
     this.props.cartListRequest();
   };
 
-  public dataProcessing = (primevalCartList: CartObject[]) => {
-    // 1. 입점사 기준으로 데이터를 가공한다.
-    const cartListWrap = _.chain(primevalCartList)
-        .groupBy('goods.provider')
-        .map((value: any) => (value))
-        .value();
-
-    // 2. 가공한 데이터를 반복문으로 돌려 총 상품 금액과 배송비를 파악한다.
+  public dataProcessing = (providerList: CartList[]) => {
+    // 총 상품 금액과 배송비를 파악한다.
     let productAmount: number[] = [];
     let deliveryCharge: number[] = [];
 
-    cartListWrap.map((cartList: CartObject[]) => {
+    providerList.map((cartList: CartObject[]) => {
       let productAmountData = 0;
       let deliveryChargeData = 0;
 
@@ -114,32 +104,36 @@ class CartContainer extends React.Component<Props, State> {
         }
       });
 
-      console.log('product amount: ', productAmountData);
-      console.log('deliveryCharge: ', deliveryChargeData);
       productAmount = [...productAmount, productAmountData];
       deliveryCharge = [...deliveryCharge, deliveryChargeData];
-      // this.setState({ productAmount: [...this.state.productAmount, productAmount] });
     });
 
-    console.log('product amount: ', productAmount);
-    console.log('deliveryCharge: ', deliveryCharge);
+    return {
+      productAmount,
+      deliveryCharge
+    };
   }
 
   public render = () => {
-    this.dataProcessing(this.state.cartList);
+    const { productAmount, deliveryCharge } = this.dataProcessing(this.state.providerList);
+
     return (
       <div>
-        <CartWrap />
+        <CartWrap
+          providerList={this.state.providerList}
+          productAmount={productAmount}
+          deliveryCharge={deliveryCharge}
+        />
       </div>
     );
   };
 };
 
 const mapStateToProps = ({ cart }: any) => {
-  const { cartList } = cart;
+  const { providerList } = cart;
 
   return {
-    cartList,
+    providerList,
   };
 };
 

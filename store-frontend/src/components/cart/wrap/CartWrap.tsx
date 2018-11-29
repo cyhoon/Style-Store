@@ -7,11 +7,46 @@ import * as styles from './CartWrap.scss';
 
 const cx = classNames.bind(styles);
 
-const CartWrap: React.SFC<{}> = () => {
+interface CartObject {
+  id: number;
+  quantity: number;
+  goods: {
+    id: number;
+    name: string;
+    provider: string;
+    price: number;
+  },
+  options: {
+    id: number;
+    color: string;
+    size: string;
+    stock: number;
+  },
+  shipping: {
+    id: number;
+    method: string;
+    price: number;
+    canBundle: boolean;
+  }
+}
+
+type CartListData = CartObject[];
+
+interface Props {
+  providerList: CartListData[];
+  productAmount: number[];
+  deliveryCharge: number[];
+}
+
+const CartWrap: React.SFC<Props> = ({ providerList, productAmount, deliveryCharge }) => {
   return (
     <div className={cx('cart-wrap')}>
       <div className={cx('cart-list-wrap')}>
-        <CartList />
+        {providerList.map((cartList: CartObject[], index: number) => {
+          return (
+            <CartList key={index} cartList={cartList} />
+          )
+        })}
       </div>
       <div className={cx('cart-result-wrap')}>
         <CartResult />

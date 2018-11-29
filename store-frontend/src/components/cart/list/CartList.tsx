@@ -5,7 +5,34 @@ import * as styles from './CartList.scss';
 
 const cx = classNames.bind(styles);
 
-class CartList extends React.Component<{}, {}> {
+interface CartObject {
+  id: number;
+  quantity: number;
+  goods: {
+    id: number;
+    name: string;
+    provider: string;
+    price: number;
+  },
+  options: {
+    id: number;
+    color: string;
+    size: string;
+    stock: number;
+  },
+  shipping: {
+    id: number;
+    method: string;
+    price: number;
+    canBundle: boolean;
+  }
+}
+
+interface Props {
+  cartList: CartObject[];
+}
+
+class CartList extends React.Component<Props, {}> {
   public render = () => {
     return (
       <div className={cx('cart-list')}>
@@ -19,12 +46,18 @@ class CartList extends React.Component<{}, {}> {
               </tr>
             </thead>
             <tbody className={cx('cart-body')}>
-              <tr>
-                <td>베이직 후드 티셔츠</td>
-                <td>493,000원</td>
-                <td>무료배송</td>
-                <td>삭제</td>
-              </tr>
+              {this.props.cartList.map(cartData => {
+                return (
+                  <tr key={cartData.id}>
+                    <td>{cartData.goods.name}</td>
+                    <td>{cartData.goods.price}</td>
+                    <td>
+                      { cartData.shipping.method === 'FREE' ? '무료': '유료'}
+                    </td>
+                    <td>삭제</td>
+                  </tr>
+                )
+              })}
             </tbody>
         </table>
       </div>
