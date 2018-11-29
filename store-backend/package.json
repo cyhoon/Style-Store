@@ -17,6 +17,7 @@
     "koa": "^2.6.1",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
+    "lodash": "^4.17.11",
     "mysql": "^2.16.0",
     "typeorm": "^0.2.8"
   },
@@ -26,6 +27,7 @@
     "@types/kcors": "^2.2.3",
     "@types/koa": "^2.0.46",
     "@types/koa-bodyparser": "^5.0.1",
-    "@types/koa-router": "^7.0.32"
+    "@types/koa-router": "^7.0.32",
+    "@types/lodash": "^4.14.118"
   }
 }

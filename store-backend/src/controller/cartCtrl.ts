@@ -1,6 +1,8 @@
 import { Context } from "koa";
-import { saveCartValidation } from "../lib/validation/cartValidation";
+import * as _ from 'lodash';
 import { Repository, getManager } from "typeorm";
+
+import { saveCartValidation } from "../lib/validation/cartValidation";
 import Goods from "../database/model/Goods";
 import Options from "../database/model/Options";
 import Cart from "../database/model/Cart";
@@ -28,12 +30,17 @@ const getCarts = async (ctx: AuthContext) => {
       where: { user: userEmail }
     });
 
+    const providerList = _.chain(cartList)
+      .groupBy('goods.provider')
+      .map((value: any) => (value))
+      .value();
+
     ctx.status = 200;
     ctx.body = {
       name: 'SUCCESS',
       description: '장바구니 목록 조회 성공',
       data: {
-        cartList,
+        providerList,
       },
     };
   } catch (error) {
