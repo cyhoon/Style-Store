@@ -97,7 +97,7 @@ class CartContainer extends React.Component<Props, State> {
           if (!canBundle) { // 배송비 묶음이 불가능이라면
             deliveryChargeData += price;
           } else {
-            if (price <= deliveryChargeData) {
+            if (price <= deliveryChargeData || deliveryChargeData === 0) {
               deliveryChargeData = price;
             }
           }

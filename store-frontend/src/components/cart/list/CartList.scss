@@ -5,6 +5,7 @@
 
     .cart-head {
       background-color: #E8EBED;
+      border: 1px solid #E8EBED;
       color: #454C53;
       font-size: 12px;
       font-weight: normal;
@@ -19,4 +20,8 @@
       }
     }
   }
+}
+
+.cart-list + .cart-list {
+  margin-top: 30px;
 }

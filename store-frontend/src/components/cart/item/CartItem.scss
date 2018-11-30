@@ -1,0 +1,32 @@
+.cart-item {
+  color: #26282B;
+  font-size: 13px;
+
+  border: 1px solid #E8EBED;
+
+  td {
+    border: 1px solid #E8EBED;
+  }
+
+  .info-wrap {
+    width: 50%;
+
+    .info {
+      margin: 20px;
+
+      .name {
+        font-weight: 800;
+        display: block;
+      }
+
+      .options {
+        color: #9EA4AA;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .price, .shipping-price {
+    font-weight: 800;
+  }
+}

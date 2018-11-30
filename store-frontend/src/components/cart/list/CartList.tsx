@@ -1,6 +1,7 @@
 import * as classNames from 'classnames/bind';
 import * as React from 'react';
 
+import CartItem from '../item';
 import * as styles from './CartList.scss';
 
 const cx = classNames.bind(styles);
@@ -47,15 +48,23 @@ class CartList extends React.Component<Props, {}> {
             </thead>
             <tbody className={cx('cart-body')}>
               {this.props.cartList.map(cartData => {
+                const {
+                  id,
+                  quantity,
+                  goods,
+                  options,
+                  shipping
+                } = cartData;
+
                 return (
-                  <tr key={cartData.id}>
-                    <td>{cartData.goods.name}</td>
-                    <td>{cartData.goods.price}</td>
-                    <td>
-                      { cartData.shipping.method === 'FREE' ? '무료': '유료'}
-                    </td>
-                    <td>삭제</td>
-                  </tr>
+                  <CartItem
+                    key={id}
+                    id={id}
+                    quantity={quantity}
+                    goods={goods}
+                    options={options}
+                    shipping={shipping}
+                  />
                 )
               })}
             </tbody>
