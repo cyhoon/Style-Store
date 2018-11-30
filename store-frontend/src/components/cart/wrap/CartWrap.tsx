@@ -39,6 +39,21 @@ interface Props {
 }
 
 const CartWrap: React.SFC<Props> = ({ providerList, productAmount, deliveryCharge }) => {
+
+  const getAllProductAmount = (): number => {
+    let allProductAmount = 0;
+
+    productAmount.map(data => allProductAmount += data );
+    return allProductAmount;
+  };
+
+  const getAllDeliveryCharge = (): number => {
+    let allDeliveryCharge = 0;
+
+    deliveryCharge.map(data => allDeliveryCharge += data );
+    return allDeliveryCharge;
+  }
+
   return (
     <div className={cx('cart-wrap')}>
       <div className={cx('cart-list-wrap')}>
@@ -49,7 +64,10 @@ const CartWrap: React.SFC<Props> = ({ providerList, productAmount, deliveryCharg
         })}
       </div>
       <div className={cx('cart-result-wrap')}>
-        <CartResult />
+        <CartResult
+          allProductAmount={getAllProductAmount()}
+          allDeliveryCharge={getAllDeliveryCharge()}
+        />
       </div>
     </div>
   );
