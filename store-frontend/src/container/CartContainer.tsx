@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
 import CartWrap from 'src/components/cart/wrap';
-import { cartListRequest } from 'src/store/modules/cart';
+import { cartListRequest, cartRemoveRequest } from 'src/store/modules/cart';
 
 interface CartObject {
   id: number;
@@ -37,6 +37,7 @@ interface Props {
     data: CartList[];
   };
   cartListRequest: typeof cartListRequest;
+  cartRemoveRequest: typeof cartRemoveRequest;
 }
 
 interface State {
@@ -112,7 +113,11 @@ class CartContainer extends React.Component<Props, State> {
       productAmount,
       deliveryCharge
     };
-  }
+  };
+
+  public handleRemoveCartList = (cartId: number) => {
+    this.props.cartRemoveRequest({ cartId });
+  };
 
   public render = () => {
     const { productAmount, deliveryCharge } = this.dataProcessing(this.state.providerList);
@@ -123,6 +128,7 @@ class CartContainer extends React.Component<Props, State> {
           providerList={this.state.providerList}
           productAmount={productAmount}
           deliveryCharge={deliveryCharge}
+          handleRemoveCartList={this.handleRemoveCartList}
         />
       </div>
     );
@@ -139,6 +145,7 @@ const mapStateToProps = ({ cart }: any) => {
 
 const mapDispatchToProps = {
   cartListRequest,
+  cartRemoveRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartContainer);

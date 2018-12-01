@@ -34,6 +34,7 @@ interface Props {
   cartList: CartObject[];
   productAmount: number;
   deliveryCharge: number;
+  handleRemoveCartList(cartId: number): void;
 }
 
 class CartList extends React.Component<Props, {}> {
@@ -68,6 +69,7 @@ class CartList extends React.Component<Props, {}> {
                     goods={goods}
                     options={options}
                     shipping={shipping}
+                    handleRemoveCartList={this.props.handleRemoveCartList}
                   />
                 )
               })}

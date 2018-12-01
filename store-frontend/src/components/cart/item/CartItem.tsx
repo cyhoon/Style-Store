@@ -1,6 +1,8 @@
 import * as classNames from 'classnames/bind';
 import * as React from 'react';
 
+import QuantityCounter from 'src/components/common/quantityCounter';
+
 import * as styles from './CartItem.scss';
 
 const cx = classNames.bind(styles);
@@ -25,7 +27,8 @@ interface Props {
     method: string;
     price: number;
     canBundle: boolean;
-  }
+  },
+  handleRemoveCartList(cartId: number): void;
 }
 
 const CartItem: React.SFC<Props> = ({
@@ -33,7 +36,8 @@ const CartItem: React.SFC<Props> = ({
   quantity,
   goods,
   options,
-  shipping
+  shipping,
+  handleRemoveCartList
 }) => {
 
   const shippingRender = () => {
@@ -44,6 +48,10 @@ const CartItem: React.SFC<Props> = ({
     return shipping.price + '원';
   }
 
+  const onClickRemoveButton = () => {
+    handleRemoveCartList(id);
+  }
+
   return (
     <tr className={cx('cart-item')}>
       <td className={cx('info-wrap')}>
@@ -52,12 +60,17 @@ const CartItem: React.SFC<Props> = ({
           <span className={cx('options')}>색상: {options.color} / 사이즈: {options.size}</span>
         </div>
       </td>
-      <td>{quantity}</td>
+      <td><QuantityCounter quantity={quantity} /></td>
       <td><span className={cx('price')}>{goods.price * quantity}원</span></td>
       <td>
         <span className={cx('shipping-price')}>{ shippingRender() }</span>
       </td>
-      <td>삭제</td>
+      <td>
+        <div className={cx('button-wrap')}>
+          <button className={cx('purchase-btn')}>바로구매</button>
+          <button className={cx('remove-btn')} onClick={onClickRemoveButton}>삭제</button>
+        </div>
+      </td>
     </tr>
   )
 }

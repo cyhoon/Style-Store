@@ -32,10 +32,13 @@ interface CartState {
   addCart: {
     goodsId: number;
     status: string;
-  },
+  };
   providerList: {
     status: string;
     data: CartList[];
+  };
+  removeCart: {
+    cartId: number;
   };
 };
 
@@ -69,6 +72,10 @@ export const GET_CART_LIST: string = 'cart/GET_CART_LIST';
 export const GET_CART_LIST_SUCCESS: string = 'cart/GET_CART_LIST_SUCCESS';
 export const GET_CART_LIST_FAIL: string = 'cart/GET_CART_LIST_FAIL';
 
+export const REMOVE_CART: string = 'cart/REMOVE_CART';
+export const REMOVE_CART_SUCCESS: string = 'cart/REMOVE_CART_SUCCESS';
+export const REMOVE_CART_FAIL: string = 'cart/REMOVE_CART_FAIL';
+
 // action creator
 export const cartCountRequest: any = createAction(GET_CART_COUNT);
 export const cartCountSuccess = createAction(GET_CART_COUNT_SUCCESS);
@@ -82,6 +89,10 @@ export const cartListRequest: any = createAction(GET_CART_LIST);
 export const cartListSuccess = createAction(GET_CART_LIST_SUCCESS);
 export const cartListFail = createAction(GET_CART_LIST_FAIL);
 
+export const cartRemoveRequest: any = createAction(REMOVE_CART);
+export const cartRemoveSuccess: any = createAction(REMOVE_CART_SUCCESS);
+export const cartRemoveFail: any = createAction(REMOVE_CART_FAIL);
+
 const initialState: CartState = {
   cartCount: 0,
   addCart: {
@@ -91,7 +102,10 @@ const initialState: CartState = {
   providerList: {
     status: 'INIT',
     data: [],
-  }
+  },
+  removeCart: {
+    cartId: -1
+  },
 };
 
 // reducer
@@ -151,5 +165,30 @@ export default handleActions({
     return produce(state, (draft: CartState) => {
       draft.providerList.status = 'FAIL';
     });
-  }
+  },
+  [REMOVE_CART]: (state: CartState, action: any) => {
+    const { cartId } = action.payload;
+    return produce(state, (draft: CartState) => {
+      draft.removeCart.cartId = cartId;
+    });
+  },
+  [REMOVE_CART_SUCCESS]: (state: CartState, action: any) => {
+    let nextProviderList = state.providerList.data.map(
+      cartList => {
+        return cartList.filter(cart => cart.id !== state.removeCart.cartId);
+      }
+    );
+
+    nextProviderList = nextProviderList.filter(provider => provider.length !== 0);
+
+    return produce(state, (draft: CartState) => {
+      draft.providerList.data = nextProviderList;
+      draft.cartCount = state.cartCount - 1;
+    })
+  },
+  [REMOVE_CART_FAIL]: (state: CartState, action: any) => {
+    return produce(state, (draft: CartState) => {
+      draft.removeCart.cartId = -1;
+    });
+  },
 }, initialState);

@@ -36,9 +36,15 @@ interface Props {
   providerList: CartListData[];
   productAmount: number[];
   deliveryCharge: number[];
+  handleRemoveCartList(cartId: number): void;
 }
 
-const CartWrap: React.SFC<Props> = ({ providerList, productAmount, deliveryCharge }) => {
+const CartWrap: React.SFC<Props> = ({
+  providerList,
+  productAmount,
+  deliveryCharge,
+  handleRemoveCartList
+}) => {
 
   const getAllProductAmount = (): number => {
     let allProductAmount = 0;
@@ -64,6 +70,7 @@ const CartWrap: React.SFC<Props> = ({ providerList, productAmount, deliveryCharg
               cartList={cartList}
               productAmount={productAmount[index]}
               deliveryCharge={deliveryCharge[index]}
+              handleRemoveCartList={handleRemoveCartList}
             />
           )
         })}

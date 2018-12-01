@@ -34,3 +34,12 @@ export const requestCartAdd = async (token: string, requestBody: CartAddRequestB
     return response;
   }
 };
+
+export const requestCartRemove = async (token: string, cartId: number) => {
+  try {
+    const response = await axios.delete(baseUrl + '/api/carts/' + cartId, { headers: { 'stylestore-token': token }});
+    return response;
+  } catch ({ response }) {
+    return response;
+  }
+};

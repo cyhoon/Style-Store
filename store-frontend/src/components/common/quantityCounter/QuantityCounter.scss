@@ -1,0 +1,21 @@
+.quantity-counter {
+  display: flex;
+  justify-content: center;
+
+  .quantity-view {
+    width: 24px;
+    padding: 3px;
+    border: 1px solid #C9CDD2;
+    border-left: none;
+    border-right: none;
+    outline: none;
+  }
+
+  .quantity-button {
+    width: 24px;
+    background-color: #F7F8F9;
+    border: 1px solid #C9CDD2;
+    outline: none;
+    cursor: pointer;
+  }
+}
