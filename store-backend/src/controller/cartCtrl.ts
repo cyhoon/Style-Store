@@ -2,7 +2,7 @@ import { Context } from "koa";
 import * as _ from 'lodash';
 import { Repository, getManager } from "typeorm";
 
-import { saveCartValidation } from "../lib/validation/cartValidation";
+import { saveCartValidation, changeCartQuantityValidation } from "../lib/validation/cartValidation";
 import Goods from "../database/model/Goods";
 import Options from "../database/model/Options";
 import Cart from "../database/model/Cart";
@@ -186,9 +186,62 @@ const getCartCount = async (ctx: AuthContext) => {
   }
 };
 
+const changeCartQuantity = async (ctx: AuthContext) => {
+  try {
+    type BodySchema = {
+      quantity?: number; // 옷 수량
+    };
+
+    const { userEmail } = ctx.token;
+    const { cartId } = ctx.params;
+
+    const isValid = changeCartQuantityValidation(ctx.request.body);
+    if (isValid.error) {
+      ctx.status = 400;
+      ctx.body = {
+        name: 'WRONG_SCHEMA',
+        description: '요청 파라미터 에러',
+      };
+      return;
+    }
+
+    const cartRepository:Repository<Cart> = getManager().getRepository(Cart);
+    const cartData: Cart = await cartRepository.findOne({ where: { user: userEmail, id: cartId }});
+
+    if (!cartData) {
+      ctx.status = 404;
+      ctx.body = {
+        name: 'NOT_FOUND',
+        description: '장바구니 데이터를 찾을 수 없음',
+      };
+      return;
+    }
+
+    const { quantity }: BodySchema = ctx.request.body;
+    cartData.quantity = quantity;
+    await cartRepository.save(cartData);
+
+    ctx.status = 200;
+    ctx.body = {
+      name: 'SUCCESS',
+      description: '장바구니 수량 수정 성공',
+      data: {
+        quantity
+      },
+    };
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body = {
+      name: 'SERVER_ERROR',
+      description: '서버 에러',
+    };
+  }
+};
+
 export {
   getCarts,
   saveCart,
   removeCart,
   getCartCount,
+  changeCartQuantity
 };

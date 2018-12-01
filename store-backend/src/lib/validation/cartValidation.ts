@@ -10,3 +10,12 @@ export const saveCartValidation = (schema) => {
   const validate = Joi.validate(schema, saveCartSchema);
   return validate;
 };
+
+export const changeCartQuantityValidation = (schema) => {
+  const changeCartQuantitySchema = {
+    quantity: Joi.number().required(),
+  };
+
+  const validate = Joi.validate(schema, changeCartQuantitySchema);
+  return validate;
+};
