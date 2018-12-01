@@ -52,7 +52,8 @@ const CartItem: React.SFC<Props> = ({
           <span className={cx('options')}>색상: {options.color} / 사이즈: {options.size}</span>
         </div>
       </td>
-      <td><span className={cx('price')}>{goods.price}원</span></td>
+      <td>{quantity}</td>
+      <td><span className={cx('price')}>{goods.price * quantity}원</span></td>
       <td>
         <span className={cx('shipping-price')}>{ shippingRender() }</span>
       </td>

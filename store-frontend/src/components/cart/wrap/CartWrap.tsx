@@ -59,7 +59,12 @@ const CartWrap: React.SFC<Props> = ({ providerList, productAmount, deliveryCharg
       <div className={cx('cart-list-wrap')}>
         {providerList.map((cartList: CartObject[], index: number) => {
           return (
-            <CartList key={index} cartList={cartList} />
+            <CartList
+              key={index}
+              cartList={cartList}
+              productAmount={productAmount[index]}
+              deliveryCharge={deliveryCharge[index]}
+            />
           )
         })}
       </div>
