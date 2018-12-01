@@ -226,6 +226,7 @@ const changeCartQuantity = async (ctx: AuthContext) => {
       name: 'SUCCESS',
       description: '장바구니 수량 수정 성공',
       data: {
+        cartId,
         quantity
       },
     };

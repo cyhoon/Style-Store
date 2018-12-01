@@ -1,6 +1,12 @@
 import { SagaIterator } from "redux-saga";
 import { all, fork } from "redux-saga/effects";
-import { watchRequestCartAdd, watchRequestCartCount, watchRequestCartList, watchRequestCartRemove } from "./cart";
+import {
+  watchRequestCartAdd,
+  watchRequestCartCount,
+  watchRequestCartList,
+  watchRequestCartQuantityChange,
+  watchRequestCartRemove
+} from "./cart";
 
 export default function* cartSaga(): SagaIterator {
   yield all([
@@ -8,5 +14,6 @@ export default function* cartSaga(): SagaIterator {
     fork(watchRequestCartAdd),
     fork(watchRequestCartList),
     fork(watchRequestCartRemove),
+    fork(watchRequestCartQuantityChange),
   ]);
 };

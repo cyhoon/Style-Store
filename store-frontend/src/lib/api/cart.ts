@@ -43,3 +43,16 @@ export const requestCartRemove = async (token: string, cartId: number) => {
     return response;
   }
 };
+
+interface CartQuantityChangeRequestBody {
+  quantity: number;
+}
+
+export const requestCartQuantityChange = async (token: string, cartId: number, requestBody: CartQuantityChangeRequestBody) => {
+  try {
+    const response = await axios.put(baseUrl + '/api/carts/' + cartId + '/quantity', requestBody, { headers: { 'stylestore-token': token }});
+    return response;
+  } catch ({ response }) {
+    return response;
+  }
+};

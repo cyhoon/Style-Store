@@ -29,6 +29,7 @@ interface Props {
     canBundle: boolean;
   },
   handleRemoveCartList(cartId: number): void;
+  handleCartChangeQuantity(cartId: number, quantity: number): void;
 }
 
 const CartItem: React.SFC<Props> = ({
@@ -37,7 +38,8 @@ const CartItem: React.SFC<Props> = ({
   goods,
   options,
   shipping,
-  handleRemoveCartList
+  handleRemoveCartList,
+  handleCartChangeQuantity,
 }) => {
 
   const shippingRender = () => {
@@ -52,6 +54,17 @@ const CartItem: React.SFC<Props> = ({
     handleRemoveCartList(id);
   }
 
+  const onClickQuantityPlus = () => {
+    const nextQuantity = quantity + 1;
+    handleCartChangeQuantity(id, nextQuantity);
+  };
+
+  const onClickQuantityMinus = () => {
+    const nextQuantity = quantity - 1;
+    if (nextQuantity <= 0) { return; }
+    handleCartChangeQuantity(id, nextQuantity);
+  };
+
   return (
     <tr className={cx('cart-item')}>
       <td className={cx('info-wrap')}>
@@ -60,7 +73,13 @@ const CartItem: React.SFC<Props> = ({
           <span className={cx('options')}>색상: {options.color} / 사이즈: {options.size}</span>
         </div>
       </td>
-      <td><QuantityCounter quantity={quantity} /></td>
+      <td>
+        <QuantityCounter
+          quantity={quantity}
+          onClickQuantityPlus={onClickQuantityPlus}
+          onClickQuantityMinus={onClickQuantityMinus}
+        />
+      </td>
       <td><span className={cx('price')}>{goods.price * quantity}원</span></td>
       <td>
         <span className={cx('shipping-price')}>{ shippingRender() }</span>

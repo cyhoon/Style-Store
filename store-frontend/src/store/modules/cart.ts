@@ -59,6 +59,24 @@ interface CartFailAction {
   };
 };
 
+interface CartChangeQuantitySuccessAction {
+  payload: {
+    name: string;
+    description: string;
+    data: {
+      cartId: number;
+      quantity: number;
+    };
+  };
+};
+
+interface CartChangeQuantityFailAction {
+  payload: {
+    name: string;
+    description: string;
+  }
+}
+
 // action type
 export const GET_CART_COUNT: string = 'cart/GET_CART_COUNT';
 export const GET_CART_COUNT_SUCCESS: string = 'cart/GET_CART_COUNT_SUCCESS';
@@ -76,6 +94,10 @@ export const REMOVE_CART: string = 'cart/REMOVE_CART';
 export const REMOVE_CART_SUCCESS: string = 'cart/REMOVE_CART_SUCCESS';
 export const REMOVE_CART_FAIL: string = 'cart/REMOVE_CART_FAIL';
 
+export const CHANGE_CART_QUANTITY: string = 'cart/CHANGE_CART_QUANTITY';
+export const CHANGE_CART_QUANTITY_SUCCESS: string = 'cart/CHANGE_CART_QUANTITY_SUCCESS';
+export const CHANGE_CART_QUANTITY_FAIL: string = 'cart/CHANGE_CART_QUANTITY_FAIL';
+
 // action creator
 export const cartCountRequest: any = createAction(GET_CART_COUNT);
 export const cartCountSuccess = createAction(GET_CART_COUNT_SUCCESS);
@@ -90,8 +112,12 @@ export const cartListSuccess = createAction(GET_CART_LIST_SUCCESS);
 export const cartListFail = createAction(GET_CART_LIST_FAIL);
 
 export const cartRemoveRequest: any = createAction(REMOVE_CART);
-export const cartRemoveSuccess: any = createAction(REMOVE_CART_SUCCESS);
-export const cartRemoveFail: any = createAction(REMOVE_CART_FAIL);
+export const cartRemoveSuccess = createAction(REMOVE_CART_SUCCESS);
+export const cartRemoveFail = createAction(REMOVE_CART_FAIL);
+
+export const cartChangeQuantityRequest: any = createAction(CHANGE_CART_QUANTITY);
+export const cartChangeQuantitySuccess = createAction(CHANGE_CART_QUANTITY_SUCCESS);
+export const cartChangeQuantityFail = createAction(CHANGE_CART_QUANTITY_FAIL);
 
 const initialState: CartState = {
   cartCount: 0,
@@ -190,5 +216,32 @@ export default handleActions({
     return produce(state, (draft: CartState) => {
       draft.removeCart.cartId = -1;
     });
+  },
+  [CHANGE_CART_QUANTITY]: (state: CartState, action: any) => {
+    return state;
+  },
+  [CHANGE_CART_QUANTITY_SUCCESS]: (state: CartState, action: CartChangeQuantitySuccessAction) => {
+    const { cartId, quantity } = action.payload.data;
+    const nextProviderList = state.providerList.data.map(
+      cartList => {
+        return cartList.map(cart => {
+          if (cart.id === Number(cartId)) {
+            return {
+              ...cart,
+              quantity,
+            }
+          }
+
+          return cart;
+        });
+      }
+    );
+
+    return produce(state, (draft: CartState) => {
+      draft.providerList.data = nextProviderList;
+    });
+  },
+  [CHANGE_CART_QUANTITY_FAIL]: (state: CartState, action: CartChangeQuantityFailAction) => {
+    return state;
   },
 }, initialState);

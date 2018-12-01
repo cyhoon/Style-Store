@@ -35,6 +35,7 @@ interface Props {
   productAmount: number;
   deliveryCharge: number;
   handleRemoveCartList(cartId: number): void;
+  handleCartChangeQuantity(cartId: number, quantity: number): void;
 }
 
 class CartList extends React.Component<Props, {}> {
@@ -70,6 +71,7 @@ class CartList extends React.Component<Props, {}> {
                     options={options}
                     shipping={shipping}
                     handleRemoveCartList={this.props.handleRemoveCartList}
+                    handleCartChangeQuantity={this.props.handleCartChangeQuantity}
                   />
                 )
               })}

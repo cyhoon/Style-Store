@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 
 import CartWrap from 'src/components/cart/wrap';
-import { cartListRequest, cartRemoveRequest } from 'src/store/modules/cart';
+import { cartChangeQuantityRequest, cartListRequest, cartRemoveRequest } from 'src/store/modules/cart';
 
 interface CartObject {
   id: number;
@@ -38,6 +38,7 @@ interface Props {
   };
   cartListRequest: typeof cartListRequest;
   cartRemoveRequest: typeof cartRemoveRequest;
+  cartChangeQuantityRequest: typeof cartChangeQuantityRequest;
 }
 
 interface State {
@@ -119,6 +120,11 @@ class CartContainer extends React.Component<Props, State> {
     this.props.cartRemoveRequest({ cartId });
   };
 
+  public handleCartChangeQuantity = (cartId: number, quantity: number) => {
+    console.log('여기는 실행이 되나요?');
+    this.props.cartChangeQuantityRequest({ cartId, quantity });
+  }
+
   public render = () => {
     const { productAmount, deliveryCharge } = this.dataProcessing(this.state.providerList);
 
@@ -129,6 +135,7 @@ class CartContainer extends React.Component<Props, State> {
           productAmount={productAmount}
           deliveryCharge={deliveryCharge}
           handleRemoveCartList={this.handleRemoveCartList}
+          handleCartChangeQuantity={this.handleCartChangeQuantity}
         />
       </div>
     );
@@ -146,6 +153,7 @@ const mapStateToProps = ({ cart }: any) => {
 const mapDispatchToProps = {
   cartListRequest,
   cartRemoveRequest,
+  cartChangeQuantityRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartContainer);
