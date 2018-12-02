@@ -1,10 +1,8 @@
-import axios from 'axios';
-
-const baseUrl = 'http://127.0.0.1:8080';
+import { authAxios } from '../axios';
 
 export const requestGoods = async () => {
   try {
-    const response = await axios.get(baseUrl + '/api/goods');
+    const response = await authAxios.get('/api/goods');
     return response;
   } catch ({ response }) {
     return response;

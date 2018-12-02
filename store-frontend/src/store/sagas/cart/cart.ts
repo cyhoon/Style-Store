@@ -8,7 +8,7 @@ import {
   requestCartQuantityChange,
   requestCartRemove,
 } from "src/lib/api/cart";
-import Storage from 'src/lib/storage';
+
 import {
   ADD_CART,
   cartAddFail,
@@ -28,9 +28,7 @@ import {
 } from "src/store/modules/cart";
 
 export function* cartCount(): SagaIterator {
-  const token = Storage.get('token');
-
-  const response = yield call(requestCartCount, token);
+  const response = yield call(requestCartCount);
 
   const { status, data: responseBodyData } = response;
 
@@ -53,9 +51,8 @@ interface CartAddBodyData {
 
 export function* cartAdd({ payload: { goodsId, optionsId, quantity } }: any): SagaIterator {
   const requestBodyData: CartAddBodyData = { goodsId, optionsId, quantity };
-  const token = Storage.get('token');
 
-  const response = yield call(requestCartAdd, token, requestBodyData);
+  const response = yield call(requestCartAdd, requestBodyData);
 
   const { status, data: responseBodyData } = response;
 
@@ -79,9 +76,7 @@ export function* cartAdd({ payload: { goodsId, optionsId, quantity } }: any): Sa
 };
 
 export function* cartList(): SagaIterator {
-  const token = Storage.get('token');
-
-  const response = yield call(requestCartList, token);
+  const response = yield call(requestCartList);
 
   const { status, data: responseBodyData } = response;
 
@@ -97,9 +92,7 @@ export function* cartList(): SagaIterator {
 };
 
 export function* removeCart({ payload: { cartId } }: any): SagaIterator {
-  const token = Storage.get('token');
-
-  const response = yield call(requestCartRemove, token, cartId);
+  const response = yield call(requestCartRemove, cartId);
 
   const { status, data: responseBodyData } = response;
 
@@ -119,9 +112,7 @@ export function* removeCart({ payload: { cartId } }: any): SagaIterator {
 };
 
 export function* changeCartQuantity({ payload: { cartId, quantity }}: any): SagaIterator {
-  const token = Storage.get('token');
-
-  const response = yield call(requestCartQuantityChange, token, cartId, { quantity });
+  const response = yield call(requestCartQuantityChange, cartId, { quantity });
 
   const { status, data: responseBodyData } = response;
 

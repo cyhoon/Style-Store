@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const baseUrl = 'http://127.0.0.1:8080';
+import { baseAxios } from '../axios';
 
 interface LoginBodyParam {
   userEmail: string;
@@ -15,7 +13,7 @@ interface RegisterBodyParam {
 
 export const requestLogin = async (bodyData: LoginBodyParam) => {
   try {
-    const response = await axios.post(baseUrl + '/api/auth/signin', bodyData);
+    const response = await baseAxios.post('/api/auth/signin', bodyData);
     return response;
   } catch ({ response }) {
     return response;
@@ -24,7 +22,7 @@ export const requestLogin = async (bodyData: LoginBodyParam) => {
 
 export const requestRegister = async (bodyData: RegisterBodyParam) => {
   try {
-    const response = await axios.post(baseUrl + '/api/auth/signup', bodyData);
+    const response = await baseAxios.post('/api/auth/signup', bodyData);
     return response;
   } catch ({ response }) {
     return response;

@@ -1,19 +1,17 @@
-import axios from 'axios';
+import { authAxios } from '../axios';
 
-const baseUrl = 'http://127.0.0.1:8080';
-
-export const requestCartList = async (token: string) => {
+export const requestCartList = async () => {
   try {
-    const response = await axios.get(baseUrl + '/api/carts', { headers: { 'stylestore-token': token } });
+    const response = await authAxios.get('/api/carts');
     return response;
   } catch ({ response }) {
     return response;
   }
 }
 
-export const requestCartCount = async (token: string) => {
+export const requestCartCount = async () => {
   try {
-    const response = await axios.get(baseUrl + '/api/carts/count', { headers: { 'stylestore-token': token } });
+    const response = await authAxios.get('/api/carts/count');
     return response;
   } catch ({ response }) {
     return response;
@@ -26,18 +24,18 @@ interface CartAddRequestBody {
   quantity: number;
 }
 
-export const requestCartAdd = async (token: string, requestBody: CartAddRequestBody) => {
+export const requestCartAdd = async (requestBody: CartAddRequestBody) => {
   try {
-    const response = await axios.post(baseUrl + '/api/carts', requestBody, { headers: { 'stylestore-token': token } });
+    const response = await authAxios.post('/api/carts', requestBody);
     return response;
   } catch ({ response }) {
     return response;
   }
 };
 
-export const requestCartRemove = async (token: string, cartId: number) => {
+export const requestCartRemove = async (cartId: number) => {
   try {
-    const response = await axios.delete(baseUrl + '/api/carts/' + cartId, { headers: { 'stylestore-token': token }});
+    const response = await authAxios.delete('/api/carts/' + cartId);
     return response;
   } catch ({ response }) {
     return response;
@@ -48,9 +46,9 @@ interface CartQuantityChangeRequestBody {
   quantity: number;
 }
 
-export const requestCartQuantityChange = async (token: string, cartId: number, requestBody: CartQuantityChangeRequestBody) => {
+export const requestCartQuantityChange = async (cartId: number, requestBody: CartQuantityChangeRequestBody) => {
   try {
-    const response = await axios.put(baseUrl + '/api/carts/' + cartId + '/quantity', requestBody, { headers: { 'stylestore-token': token }});
+    const response = await authAxios.put(`/api/carts/${cartId}/quantity`, requestBody);
     return response;
   } catch ({ response }) {
     return response;
