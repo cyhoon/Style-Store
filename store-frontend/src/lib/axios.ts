@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const LOCAL_URL = 'http://127.0.0.1:8080';
+let LOCAL_URL = 'http://52.79.228.238:8010';
+
+if (process.env.NODE_ENV === 'development') {
+  LOCAL_URL = 'http://127.0.0.1:8080';
+};
 
 export const baseAxios = (() => {
   return axios.create({
